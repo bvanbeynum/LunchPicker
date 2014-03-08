@@ -1,16 +1,16 @@
 var http = require("http");
 var express = require("express");
 
-var port = 5501;
-var app = express();
+var port = 80;
+var server = express();
 
-app.use("/css", express.static(__dirname + "/CSS"));
-app.use("/js", express.static(__dirname + "/Script"));
-app.use("/image", express.static(__dirname + "/Images"));
+server.use("/css", express.static(__dirname + "/css"));
+server.use("/js", express.static(__dirname + "/script"));
+server.use("/media", express.static(__dirname + "/media"));
 
-app.get("/", function (request, response) {
-	response.sendfile(__dirname + "/Html/index.htm");
+server.get("/", function (request, response) {
+	response.sendfile(__dirname + "/html/index.html");
 });
 
-app.listen(port);
+server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0");
 console.log("listening on port " + port);
