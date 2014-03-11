@@ -1,0 +1,11 @@
+{
+    "name": "LunchPicker",
+    "version": "0.0.1",
+    "description": "Lunch picker application to assist in the decision of where to go to lunch",
+    "main": "server.js",
+    "author": "Brett van Beynum",
+    "dependencies": {
+        "express": "~3.5.0",
+        "mongoose": "~3.8.8"
+    }
+}
