@@ -1,16 +1,37 @@
-var http = require("http");
+// Setup =======================================================================
+
 var express = require("express");
+var app = express();
+var port = process.env.PORT || 8080;
+var database = require("./server/config/database");
+var mongoose = require("mongoose");
 
-var port = 80;
-var server = express();
+// Config ======================================================================
 
-server.use("/css", express.static(__dirname + "/css"));
-server.use("/js", express.static(__dirname + "/script"));
-server.use("/media", express.static(__dirname + "/media"));
+mongoose.connect(database.url);
 
-server.get("/", function (request, response) {
-	response.sendfile(__dirname + "/html/index.html");
+// Routes ======================================================================
+
+require("./server/routes/restaurant")(app);
+
+// Test ======================================================================
+
+var Cat = mongoose.model('Cat', { name: String });
+
+app.get("/test", function (req, res) {
+	var kitty = new Cat({ name: 'Zildjian' });
+	kitty.save(function (err) {
+		if (err) {
+			console.log("error:" + err);
+		}
+
+		console.log('meow');
+	});
+	
+	res.send(new Date());
 });
 
-server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0");
-console.log("listening on port " + port);
+// listen (start app with node server.js) ======================================
+
+app.listen(port);
+console.log("App listening on port " + port);
